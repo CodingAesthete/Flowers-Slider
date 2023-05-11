@@ -1,6 +1,8 @@
 $(window).on('load', function () {
   "use strict";
 
+  $("#caption").animate( {fontSize:'44px'}, 2000, 'easeInQuad')
+
   var canvas = document.getElementById('rain');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
