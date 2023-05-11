@@ -1,0 +1,65 @@
+body {
+  padding: 100px;
+  background: #2db8bd;
+  background-image: url('https://thisoldhouse.jppadmin.com/wp-content/uploads/sites/10/2022/06/Grow_grass_iStock_899234322-min-scaled.jpeg');
+  background-size: cover;
+}
+
+#slider {
+  width: 400px;
+  height: 266px;
+  border: 10px solid #9c0c0c;
+  position: relative;
+  margin: auto;
+  overflow:hidden;
+}
+
+#slider ul {
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+  position: absolute;
+  top:0; 
+  left:0;
+  display:flex;
+}
+
+#slider img {
+  width: 400px;
+  height: 266px;
+}
+
+p{
+  margin-top:10px;
+  text-align:center;
+  display: flex;
+  margin-left:362px;
+  margin-top:0;
+}
+
+p a {
+  margin:0;
+  color: white;
+  font-size: 22px;
+  background-color: rgb(35, 108, 133);
+  padding:10px 63px 10px 62px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+#sound-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  width:50px;
+  background-color: white;;
+}
+
+#rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
