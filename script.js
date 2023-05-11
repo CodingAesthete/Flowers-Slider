@@ -1,43 +1,6 @@
 $(window).on('load', function () {
   "use strict";
 
-  AddRain();
-  AddSound();
-
-  const imgCount = $('#slider ul li').length;
-  const imgWidth = $('#slider ul li').first().width();
-  const totalWidth = (imgWidth * imgCount) + 'px';
-
-  let leftPosition = 0;
-  let counter = 0;
-
-  $('#slider ul').css("width", totalWidth);
-
-  $('#next').click(function () {
-    counter++;
-
-    if (counter === imgCount) {
-      counter = 0;
-    }
-
-    leftPosition = `-${counter * imgWidth}px`
-    $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad")
-  });
-
-  $('#previous').click(function () {
-    counter--;
-
-    if (counter === -1) {
-      counter = imgCount - 1;
-    }
-
-    leftPosition = `-${counter * imgWidth}px`
-    $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad")
-  });
-
-});
-
-function AddRain() {
   const canvas = document.getElementById('rain');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -55,7 +18,6 @@ function AddRain() {
       this.color = 'rgba(255, 255, 255, 0.5)';
     }
 
-    // Update the raindrop position and draw it on the canvas
     update() {
       this.y += this.speed;
       if (this.y > canvas.height) {
@@ -70,7 +32,7 @@ function AddRain() {
     }
   }
 
-  for (var i = 0; i < 100; i++) {
+  for (let i = 0; i < 100; i++) {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height;
     const speed = Math.random() * 5 + 5;
@@ -84,12 +46,10 @@ function AddRain() {
     for (let i = 0; i < drops.length; i++) {
       drops[i].update();
     }
-  }
+  };
 
   animate();
-}
 
-function AddSound() {
   const audio = document.getElementById("audio");
   const soundIcon = document.getElementById("sound-icon");
   soundIcon.src = "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-volume-mute-512.png";
@@ -104,4 +64,36 @@ function AddSound() {
       soundIcon.src = "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-volume-mute-512.png";
     }
   });
-}
+
+  let imgCount = $('#slider ul li').length;
+  let imgWidth = $('#slider ul li').first().width();
+  let totalWidth = (imgWidth * imgCount) + 'px';
+
+  let leftPosition = 0;
+  let counter = 0;
+
+  $('#slider ul').css("width", totalWidth);
+
+  $('#next').click(function () {
+    counter++;
+
+    if (counter === imgCount) {
+      counter = 0;
+    } else {
+      leftPosition = `-${counter * imgWidth}px`
+      $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
+    }
+  });
+
+  $('#previous').click(function () {
+    counter--;
+
+    if (counter === -1) {
+      counter = imgCount - 1;
+    } else {
+      leftPosition = `-${counter * imgWidth}px`;
+      $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
+    }
+  });
+
+});
