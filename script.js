@@ -1,13 +1,13 @@
 $(window).on('load', function () {
   "use strict";
 
-  const canvas = document.getElementById('rain');
+  var canvas = document.getElementById('rain');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d');
 
-  const drops = [];
+  var drops = [];
 
   class Raindrop {
     constructor(x, y, speed) {
@@ -50,8 +50,8 @@ $(window).on('load', function () {
 
   animate();
 
-  const audio = document.getElementById("audio");
-  const soundIcon = document.getElementById("sound-icon");
+  var audio = document.getElementById("audio");
+  var soundIcon = document.getElementById("sound-icon");
   soundIcon.src = "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-volume-mute-512.png";
   $('#audio').prop('volume', 0.08);
 
@@ -65,22 +65,33 @@ $(window).on('load', function () {
     }
   });
 
-  let imgCount = $('#slider ul li').length;
-  let imgWidth = $('#slider ul li').first().width();
-  let totalWidth = (imgWidth * imgCount) + 'px';
+  var imgCount = $('#slider ul li').length;
+  var imgWidth = $('#slider ul li').first().width();
+  var totalWidth = (imgWidth * imgCount) + 'px';
 
-  let leftPosition = 0;
-  let counter = 0;
+  var leftPosition = 0;
+  var counter = 0;
 
   $('#slider ul').css("width", totalWidth);
 
   $('#next').click(function () {
     counter++;
 
-    if (counter === imgCount) {
-      counter = 0;
-    } else {
-      leftPosition = `-${counter * imgWidth}px`
+    if (counter == imgCount) {
+      $('#slider ul').clone().appendTo('#slider');
+      $('#slider ul').last().css('left', imgWidth + 'px');
+      
+      leftPosition= `-${totalWidth}`
+
+      $('#slider ul').last().animate({left: 0}, 700, "easeInQuad");
+      $('#slider ul').first().animate({left: leftPosition}, 700, "easeInQuad", function() {
+        $('#slider ul').first().remove();
+      });
+
+      counter=0;
+    } 
+    else  {
+      leftPosition = `-${counter * imgWidth}px`;
       $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
     }
   });
@@ -89,11 +100,23 @@ $(window).on('load', function () {
     counter--;
 
     if (counter === -1) {
-      counter = imgCount - 1;
-    } else {
+
+      $('#slider ul').clone().prependTo('#slider');
+      $('#slider ul').first().css('left', -imgCount*imgWidth + 'px');
+
+      leftPosition = `${imgWidth}`
+
+      $('#slider ul').first().animate({left: -(imgCount-1)*imgWidth}, 700, "easeInQuad");
+      $('#slider ul').last().animate({left: imgWidth}, 700, "easeInQuad", function() {
+        $('#slider ul').last().remove();
+      });
+      counter=imgCount-1;
+    }  
+    else{
       leftPosition = `-${counter * imgWidth}px`;
       $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
     }
+      
   });
 
 });
