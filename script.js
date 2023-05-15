@@ -1,6 +1,31 @@
 $(window).on('load', function () {
   "use strict";
 
+  let count = 1;
+
+  function contentRotator() {
+    let currentElement = $(`#container p:nth-child(${count})`);
+    let previousElement = $(`#container p:nth-child(${count - 1})`);
+
+    if (count === 1) {
+      previousElement = $(`#container p:last-child`);
+    }
+
+    previousElement.fadeOut(1000, function () {
+      currentElement.fadeIn(2000);
+    });
+
+    count++;
+    if (count == $(`#container p`).length + 1) {
+      count = 1;
+    }
+    //setTimeout(contentRotator, 5000);
+  }
+
+  contentRotator();
+
+  setInterval(contentRotator, 5000);
+
   $("#caption").animate({ fontSize: '44px' }, 2000, 'easeInQuad');
 
   createRain();

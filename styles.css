@@ -72,3 +72,11 @@ p a {
   margin-top: 10px;
 }
 
+
+
+#container p {
+  display: none;
+  text-align: justify;
+  margin-right:360px;
+  color:white
+}
