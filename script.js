@@ -18,60 +18,33 @@ $(window).on('load', function () {
 
   let timer = setInterval(slider, 2000);
   $('#slider ul li').mouseover(function () {
-    setTimeout(function () {
       clearInterval(timer);
-      }); 
     });
 
-    $('#slider ul li').mouseout(function () {
+  $('#slider ul li').mouseout(function () {
       timer=setInterval(slider, 2000);
-      });
-      
-  function slider() {
-  counter++;
-  
-    if (counter == imgCount) {
-    $('#slider ul').clone().appendTo('#slider');
-    $('#slider ul').last().css('left', imgWidth + 'px');
-    
-      leftPosition = `-${totalWidth}`
-    
-      $('#slider ul').last().animate({ left: 0 }, 700, "easeInQuad");
-    $('#slider ul').first().animate({ left: leftPosition }, 700, "easeInQuad", function () {
-      $('#slider ul').first().remove();
     });
-  
+
+  function slider() {
+    counter++;
+        
+    if (counter == imgCount) {
+      $('#slider ul').clone().appendTo('#slider');
+      $('#slider ul').last().css('left', imgWidth + 'px');
+          
+      leftPosition = `-${totalWidth}`
+          
+      $('#slider ul').last().animate({ left: 0 }, 700, "easeInQuad");
+      $('#slider ul').first().animate({ left: leftPosition }, 700, "easeInQuad", function () {
+        $('#slider ul').first().remove();
+      });
+        
       counter = 0;
-}
-    else {
-      leftPosition = `-${counter * imgWidth}px`;
-  $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
-}
-  };
-
-  // $('#previous').click(function () {
-  //   counter--;
-
-  //   if (counter === -1) {
-
-  //     $('#slider ul').clone().prependTo('#slider');
-  //     $('#slider ul').first().css('left', -imgCount*imgWidth + 'px');
-
-  //     leftPosition = `${imgWidth}`
-
-  //     $('#slider ul').first().animate({left: -(imgCount-1)*imgWidth}, 700, "easeInQuad");
-  //     $('#slider ul').last().animate({left: imgWidth}, 700, "easeInQuad", function() {
-  //       $('#slider ul').last().remove();
-  //     });
-  //     counter=imgCount-1;
-  //   }  
-  //   else{
-  //     leftPosition = `-${counter * imgWidth}px`;
-  //     $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
-  //   }
-
-  // });
-
+      } else {
+        leftPosition = `-${counter * imgWidth}px`;
+        $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
+      }
+    };
 });
 
 function createRain() {
@@ -92,37 +65,37 @@ function createRain() {
       this.color = 'rgba(255, 255, 255, 0.5)';
     }
 
-    update() {
-  this.y += this.speed;
-  if (this.y > canvas.height) {
-    this.y = Math.random() * -50;
-  }
-ctx.beginPath();
-ctx.moveTo(this.x, this.y);
-ctx.lineTo(this.x, this.y + this.length);
-ctx.strokeStyle = this.color;
-ctx.lineWidth = 2;
-ctx.stroke();
+  update() {
+    this.y += this.speed;
+    if (this.y > canvas.height) {
+      this.y = Math.random() * -50;
     }
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x, this.y + this.length);
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
-
-  for (let i = 0; i < 100; i++) {
-  const x = Math.random() * canvas.width;
-  const y = Math.random() * canvas.height;
-  const speed = Math.random() * 5 + 10;
-  const drop = new Raindrop(x, y, speed);
-  drops.push(drop);
 }
 
-  function animate() {
-  requestAnimationFrame(animate);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let i = 0; i < drops.length; i++) {
-    drops[i].update();
+  for (let i = 0; i < 100; i++) {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    const speed = Math.random() * 5 + 15;
+    const drop = new Raindrop(x, y, speed);
+    drops.push(drop);
   }
-};
 
-  animate();
+  function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < drops.length; i++) {
+      drops[i].update();
+    }
+  };
+
+    animate();
 }; 
 
 function createSound(){
