@@ -1,8 +1,71 @@
 $(window).on('load', function () {
   "use strict";
 
-  $("#caption").animate( {fontSize:'44px'}, 2000, 'easeInQuad')
+  $("#caption").animate({ fontSize: '44px' }, 2000, 'easeInQuad');
 
+  createRain();
+
+  createSound();
+
+  var imgCount = $('#slider ul li').length;
+  var imgWidth = $('#slider ul li').first().width();
+  var totalWidth = (imgWidth * imgCount) + 'px';
+
+  var leftPosition = 0;
+  var counter = 0;
+
+  $('#slider ul').css("width", totalWidth);
+
+  var timer = setInterval(slider, 2000);
+
+  function slider() {
+    counter++;
+
+    if (counter == imgCount) {
+      $('#slider ul').clone().appendTo('#slider');
+      $('#slider ul').last().css('left', imgWidth + 'px');
+
+      leftPosition = `-${totalWidth}`
+
+      $('#slider ul').last().animate({ left: 0 }, 700, "easeInQuad");
+      $('#slider ul').first().animate({ left: leftPosition }, 700, "easeInQuad", function () {
+        $('#slider ul').first().remove();
+      });
+
+      counter = 0;
+    }
+    else {
+      leftPosition = `-${counter * imgWidth}px`;
+      $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
+    }
+  };
+
+  // $('#previous').click(function () {
+  //   counter--;
+
+  //   if (counter === -1) {
+
+  //     $('#slider ul').clone().prependTo('#slider');
+  //     $('#slider ul').first().css('left', -imgCount*imgWidth + 'px');
+
+  //     leftPosition = `${imgWidth}`
+
+  //     $('#slider ul').first().animate({left: -(imgCount-1)*imgWidth}, 700, "easeInQuad");
+  //     $('#slider ul').last().animate({left: imgWidth}, 700, "easeInQuad", function() {
+  //       $('#slider ul').last().remove();
+  //     });
+  //     counter=imgCount-1;
+  //   }  
+  //   else{
+  //     leftPosition = `-${counter * imgWidth}px`;
+  //     $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
+  //   }
+
+  // });
+
+});
+
+function createRain() {
   var canvas = document.getElementById('rain');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -37,7 +100,7 @@ $(window).on('load', function () {
   for (let i = 0; i < 100; i++) {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height;
-    const speed = Math.random() * 5 + 5;
+    const speed = Math.random() * 5 + 10;
     const drop = new Raindrop(x, y, speed);
     drops.push(drop);
   }
@@ -51,7 +114,9 @@ $(window).on('load', function () {
   };
 
   animate();
+};
 
+function createSound(){
   var audio = document.getElementById("audio");
   var soundIcon = document.getElementById("sound-icon");
   soundIcon.src = "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-volume-mute-512.png";
@@ -66,59 +131,4 @@ $(window).on('load', function () {
       soundIcon.src = "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-volume-mute-512.png";
     }
   });
-
-  var imgCount = $('#slider ul li').length;
-  var imgWidth = $('#slider ul li').first().width();
-  var totalWidth = (imgWidth * imgCount) + 'px';
-
-  var leftPosition = 0;
-  var counter = 0;
-
-  $('#slider ul').css("width", totalWidth);
-
-  $('#next').click(function () {
-    counter++;
-
-    if (counter == imgCount) {
-      $('#slider ul').clone().appendTo('#slider');
-      $('#slider ul').last().css('left', imgWidth + 'px');
-      
-      leftPosition= `-${totalWidth}`
-
-      $('#slider ul').last().animate({left: 0}, 700, "easeInQuad");
-      $('#slider ul').first().animate({left: leftPosition}, 700, "easeInQuad", function() {
-        $('#slider ul').first().remove();
-      });
-
-      counter=0;
-    } 
-    else  {
-      leftPosition = `-${counter * imgWidth}px`;
-      $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
-    }
-  });
-
-  $('#previous').click(function () {
-    counter--;
-
-    if (counter === -1) {
-
-      $('#slider ul').clone().prependTo('#slider');
-      $('#slider ul').first().css('left', -imgCount*imgWidth + 'px');
-
-      leftPosition = `${imgWidth}`
-
-      $('#slider ul').first().animate({left: -(imgCount-1)*imgWidth}, 700, "easeInQuad");
-      $('#slider ul').last().animate({left: imgWidth}, 700, "easeInQuad", function() {
-        $('#slider ul').last().remove();
-      });
-      counter=imgCount-1;
-    }  
-    else{
-      leftPosition = `-${counter * imgWidth}px`;
-      $("#slider ul").animate({ left: leftPosition }, 700, "easeInQuad");
-    }
-      
-  });
-
-});
+}
