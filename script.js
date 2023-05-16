@@ -4,27 +4,27 @@ $(window).on('load', function () {
   let count = 1;
 
   function contentRotator() {
-    let currentElement = $(`#container p:nth-child(${count})`);
-    let previousElement = $(`#container p:nth-child(${count - 1})`);
-
-    if (count === 1) {
-      previousElement = $(`#container p:last-child`);
-    }
-
-    previousElement.fadeOut(1000, function () {
-      currentElement.fadeIn(2000);
+    $(`#container p:nth-child(${count})`).fadeIn(2000, function(){
+      if($(this).is(`#container p:last-child`)){
+        setTimeout(function () {
+          $(`#container p:nth-child(${count})`).fadeOut(2000, function() {
+            count = 1;
+            contentRotator();
+          })
+        },7000)
+      }
+      else {
+        setTimeout( function () {
+          $(`#container p:nth-child(${count})`).fadeOut(2000, function() {
+            count++;
+            contentRotator();
+          })
+        }, 7000)
+      }
     });
-
-    count++;
-    if (count == $(`#container p`).length + 1) {
-      count = 1;
-    }
-    //setTimeout(contentRotator, 5000);
   }
 
   contentRotator();
-
-  setInterval(contentRotator, 5000);
 
   $("#caption").animate({ fontSize: '44px' }, 2000, 'easeInQuad');
 
