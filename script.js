@@ -11,7 +11,7 @@ $(window).on('load', function () {
             count = 1;
             contentRotator();
           })
-        },7000)
+        },5700)
       }
       else {
         setTimeout( function () {
@@ -19,14 +19,14 @@ $(window).on('load', function () {
             count++;
             contentRotator();
           })
-        }, 7000)
+        }, 5700)
       }
     });
   }
 
   contentRotator();
 
-  $("#caption").animate({ fontSize: '44px' }, 2000, 'easeInQuad');
+  $("#caption").animate({ fontSize: '38px' }, 2000, 'easeInQuad');
 
   createRain();
 
